@@ -1,0 +1,159 @@
+#include <iostream>
+using namespace std;
+class Cola
+{
+private:
+    int datos[10];
+    int frente;
+    int fin;
+    int cantidad;
+public:
+    Cola()
+    {
+        frente = 0;
+        fin = -1;
+        cantidad = 0;
+    }
+    bool estaVacia()
+    {
+        return cantidad == 0;
+    }
+    bool estaLlena()
+    {
+        return cantidad == 10;
+    }
+    void encolar(int dato)
+    {
+        if (estaLlena())
+        {
+            cout << "La cola esta llena. No se puede encolar." << endl;
+            return;
+        }
+        fin = (fin + 1) % 10;
+        datos[fin] = dato;
+        cantidad = cantidad + 1;
+        cout << "Elemento " << dato << " encolado en la posicion " << fin << " del arreglo." << endl;
+    }
+    void desencolar()
+    {
+        if (estaVacia())
+        {
+            cout << "La cola esta vacia. No hay elementos que retirar." << endl;
+            return;
+        }
+        cout << "Elemento " << datos[frente] << " desencolado de la posicion " << frente << " del arreglo." << endl;
+        frente = (frente + 1) % 10;
+        cantidad = cantidad - 1;
+    }
+    void mostrarFrente()
+    {
+        if (estaVacia())
+        {
+            cout << "La cola esta vacia. No hay elemento al frente." << endl;
+            return;
+        }
+        cout << "El elemento del frente es: " << datos[frente] << endl;
+    }
+    void mostrar()
+    {
+        if (estaVacia())
+        {
+            cout << "La cola esta vacia." << endl;
+            return;
+        }
+        cout << "Contenido de la cola (en orden de salida):" << endl;
+        for (int i = 0; i < cantidad; i++)
+        {
+            int posicion = (frente + i) % 10;
+            cout << i + 1 << ". " << datos[posicion] << "  (posicion " << posicion << ")";
+            if (i == 0)
+            {
+            }
+                cout << "  <- frente";
+            if (i == cantidad - 1)
+            {
+                cout << "  <- final";
+            }
+            cout << endl;
+        }
+        cout << "Elementos en la cola: " << cantidad << " de 10" << endl;
+};
+    }
+int main()
+{
+    Cola cola;
+    int opcion;
+    int dato;
+    do
+    {
+        cout << "===== MENU =====" << endl;
+        cout << "1. Encolar elemento" << endl;
+        cout << "2. Desencolar elemento" << endl;
+        cout << "3. Mostrar el frente" << endl;
+        cout << "4. Mostrar cola completa" << endl;
+        cout << "5. Verificar si esta vacia" << endl;
+        cout << "6. Verificar si esta llena" << endl;
+        cout << "7. Salir" << endl;
+        cout << "Elige una opcion: ";
+        cin >> opcion;
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            opcion = 0;
+        }
+        cout << endl;
+        switch (opcion)
+        {
+        case 1:
+            cout << "Escribe el numero entero a encolar: ";
+            cin >> dato;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Entrada no valida. Debes escribir un numero entero." << endl;
+            }
+            else
+            {
+                cola.encolar(dato);
+            }
+            break;
+        case 2:
+            cola.desencolar();
+            break;
+        case 3:
+            cola.mostrarFrente();
+            break;
+        case 4:
+            cola.mostrar();
+            break;
+        case 5:
+            if (cola.estaVacia())
+            {
+                cout << "La cola esta vacia." << endl;
+            }
+            else
+            {
+                cout << "La cola no esta vacia." << endl;
+            }
+            break;
+        case 6:
+            if (cola.estaLlena())
+            {
+                cout << "La cola esta llena." << endl;
+            }
+            else
+            {
+                cout << "La cola no esta llena." << endl;
+            }
+            break;
+        case 7:
+            cout << "Fin del programa." << endl;
+            break;
+        default:
+            cout << "Opcion no valida." << endl;
+        }
+        cout << endl;
+    } while (opcion != 7);
+    return 0
